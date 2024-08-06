@@ -15,10 +15,13 @@ class StatsComponent extends Component
     public $totalRevenueToday;
     public $totalRevenueThisMonth;
     public $totalTransactionThisMonth;
+    public $totalRevenueAllTime;
 
     public function mount()
     {
         $today = Carbon::today();
+
+        $this->totalRevenueAllTime = Revenue::sum('revenue');
 
         // Jumlah transaksi bulan ini
         $this->totalTransactionThisMonth = Transaction::whereMonth('created_at', $today->month)->count();

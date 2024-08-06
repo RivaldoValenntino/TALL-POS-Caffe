@@ -153,6 +153,12 @@
                                     <span class="text-sm" :class="{ 'hidden': isHide }">Orders History</span>
                                 </a></li>
                         </div>
+                        <div class="px-2">
+                            <li><a class="link-cls whitespace-nowrap" href="{{ route('dashboard.report') }}">
+                                    <i class="text-xl ph ph-file-xls"></i>
+                                    <span class="text-sm" :class="{ 'hidden': isHide }">Report</span>
+                                </a></li>
+                        </div>
                     </ul>
                 </aside>
             </div>

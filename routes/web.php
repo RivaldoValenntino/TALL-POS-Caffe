@@ -5,6 +5,7 @@ use App\Livewire\Categories\CategoryPage;
 use App\Livewire\Customer\CustomerIndex;
 use App\Livewire\Dashboard;
 use App\Livewire\Menu\MenuIndex;
+use App\Livewire\Reports\ExcelReport;
 use App\Livewire\Setting\UserSetting;
 use App\Livewire\Transactions\Invoice;
 use App\Livewire\Transactions\TransactionIndex;
@@ -22,6 +23,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => 'au
     Route::get('/history', TransactionsHistory::class)->name('orders.history');
     Route::get('/history/detail/{invoice_number}', TransactionsDetail::class)->name('orders.detail');
     Route::get('/orders/print/{invoice_number}', Invoice::class)->name('transactions.pdf');
+    Route::get('/report', ExcelReport::class)->name('report');
 });
 
 

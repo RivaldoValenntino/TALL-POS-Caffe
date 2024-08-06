@@ -29,6 +29,19 @@
             </div>
         </div>
 
+        <!-- Tile for Total Revenue All Time -->
+        <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
+            <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-green-200 rounded-lg shadow-lg">
+                <i class="text-3xl text-green-700 ph ph-money"></i>
+            </div>
+            <div class="flex flex-col flex-grow ml-4">
+                <span class="text-xl font-bold">@currency($totalRevenueAllTime)</span>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-500">Total Revenue All Time</span>
+                </div>
+            </div>
+        </div>
+
         <!-- Tile for Total Customers Today -->
         <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
             <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-blue-200 rounded-lg shadow-lg">
