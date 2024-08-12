@@ -20,7 +20,7 @@
                             <label for="username" class="block mb-2 text-sm dark:text-white">Username</label>
                             <div class="relative">
                                 <input type="text" id="username" name="username"
-                                    class="block w-full px-4 py-3 text-sm border @error('username') border-red-500 @enderror border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                    class="block w-full px-4 py-3 text-sm border @error('username') border-red-500 @enderror border-gray-400 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                                     required aria-describedby="email-error">
                                 <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                                     <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
@@ -43,7 +43,7 @@
                             </div>
                             <div class="relative">
                                 <input type="password" id="password" name="password"
-                                    class="block w-full px-4 py-3 text-sm border @error('password') border-red-500 @enderror border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                    class="block w-full px-4 py-3 text-sm border @error('password') border-red-500 @enderror border-gray-400 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                                     required aria-describedby="password-error">
                                 <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                                     <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"

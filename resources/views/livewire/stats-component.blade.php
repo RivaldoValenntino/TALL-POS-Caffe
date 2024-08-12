@@ -43,7 +43,7 @@
         </div>
 
         <!-- Tile for Total Customers Today -->
-        <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
+        {{-- <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
             <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-blue-200 rounded-lg shadow-lg">
                 <i class="text-3xl text-blue-700 ph ph-users"></i>
             </div>
@@ -53,10 +53,24 @@
                     <span class="text-gray-500">Total Customers Today</span>
                 </div>
             </div>
-        </div>
+        </div> --}}
+
+
+        <!-- Tile for Total Customers This Month -->
+        {{-- <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
+            <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-blue-200 rounded-lg shadow-lg">
+                <i class="text-3xl text-blue-700 ph ph-users"></i>
+            </div>
+            <div class="flex flex-col flex-grow ml-4">
+                <span class="text-xl font-bold">{{ $totalCustomersThisMonth }}</span>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-500">Total Customers This Month</span>
+                </div>
+            </div>
+        </div> --}}
 
         <!-- Tile for Total Transactions This Month -->
-        <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
+        {{-- <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
             <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-blue-200 rounded-lg shadow-lg">
                 <i class="text-3xl text-blue-700 ph ph-cash-register"></i>
             </div>
@@ -64,6 +78,18 @@
                 <span class="text-xl font-bold">{{ $totalTransactionThisMonth }}</span>
                 <div class="flex items-center justify-between">
                     <span class="text-gray-500">Transactions This Month</span>
+                </div>
+            </div>
+        </div> --}}
+        <!-- Tile for Total Transactions Today -->
+        <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
+            <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-blue-200 rounded-lg shadow-lg">
+                <i class="text-3xl text-blue-700 ph ph-cash-register"></i>
+            </div>
+            <div class="flex flex-col flex-grow ml-4">
+                <span class="text-xl font-bold">{{ $totalTransactionThisDay }}</span>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-500">Transactions Today</span>
                 </div>
             </div>
         </div>

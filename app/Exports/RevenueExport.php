@@ -5,9 +5,10 @@ namespace App\Exports;
 use App\Models\Revenue;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-class RevenueExport implements FromView, WithTitle
+class RevenueExport implements FromView, WithTitle, WithColumnWidths
 {
 
 
@@ -30,5 +31,14 @@ class RevenueExport implements FromView, WithTitle
     public function title(): string
     {
         return 'Revenue Report';
+    }
+
+
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 30,
+            'B' => 30,
+        ];
     }
 }

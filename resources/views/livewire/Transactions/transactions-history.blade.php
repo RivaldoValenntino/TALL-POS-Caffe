@@ -76,16 +76,16 @@
                                                 Payment Method
                                             </span>
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-start whitespace-nowrap">
+                                        {{-- <th scope="col" class="px-6 py-3 text-start whitespace-nowrap">
                                             <span
                                                 class="text-xs font-semibold tracking-wide text-gray-800 uppercase dark:text-neutral-200">
                                                 Status
                                             </span>
-                                        </th>
+                                        </th> --}}
                                         <th scope="col" class="px-6 py-3 text-start whitespace-nowrap">
                                             <span
                                                 class="text-xs font-semibold tracking-wide text-gray-800 uppercase dark:text-neutral-200">
-                                                Created At
+                                                Transaction Date
                                             </span>
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-start whitespace-nowrap">
@@ -121,7 +121,7 @@
                                                         class="text-sm font-semibold text-gray-800 dark:text-white">{{ Str::ucfirst($transaction->payment_method) }}</span>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-3 whitespace-nowrap">
+                                            {{-- <td class="px-6 py-3 whitespace-nowrap">
                                                 <div class="relative inline-flex hs-dropdown">
                                                     <button id="hs-dropdown-{{ $transaction->id }}" type="button"
                                                         class="hs-dropdown-toggle dropdown-button" aria-haspopup="menu"
@@ -153,7 +153,7 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                            </td>
+                                            </td> --}}
 
                                             </td>
                                             <td class="px-6 py-3 whitespace-nowrap">
@@ -166,8 +166,7 @@
                                                     <i class="ph ph-trash-simple"></i>
                                                     <span>Delete</span>
                                                 </button>
-                                                <button type="button"
-                                                    class="mr-2 text-sm font-semibold text-blue-500">
+                                                <button type="button" class="mr-2 text-sm font-semibold text-blue-500">
                                                     <a
                                                         href="{{ route('dashboard.orders.detail', $transaction->invoice_number) }}">
                                                         <i class="ph ph-eye"></i>

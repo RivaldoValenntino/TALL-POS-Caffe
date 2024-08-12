@@ -15,8 +15,9 @@
 
 <body>
 
-    <main class="flex items-center justify-center min-h-screen">
-        <div class="w-1/4">
+    <main class="flex items-center justify-center min-h-screen "
+        style="background-image: url('{{ asset('image/background-caffe.jpg') }}')">
+        <div class="w-1/4 z-[99]">
             {{ $slot }}
         </div>
     </main>

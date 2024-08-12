@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Menu;
 use App\Models\User;
+use Database\Factories\CustomerFactory;
 use Database\Factories\RevenueFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,6 +19,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        RevenueFactory::new()->count(50)->create();
+        User::create([
+            'name' => 'Kasir',
+            'email' => 'p7I8Z@example.com',
+            'password' => Hash::make('kasir123'),
+            'role' => 'kasir',
+            'username' => 'kasir',
+        ]);
     }
 }

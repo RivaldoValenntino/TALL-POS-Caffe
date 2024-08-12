@@ -1,6 +1,6 @@
 <div>
     <!-- Table Section -->
-    <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto" x-data="{ load: $wire.entangle('loading') }">
+    <div class="max-w-[85rem] pl-32 mx-auto" x-data="{ load: $wire.entangle('loading') }">
         <!-- Card -->
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">

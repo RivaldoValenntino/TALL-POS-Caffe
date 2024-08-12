@@ -9,11 +9,13 @@ use App\Models\Customer;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Title;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TransactionIndex extends Component
 {
     #[Title('Transaksi')]
 
+    public $isCheckoutDisabled = true;
     public $items = [];
     public $customer_id;
     public $totalPrice = 0;
@@ -25,6 +27,17 @@ class TransactionIndex extends Component
     public $payment_method = '';
     public $customers_pay;
     public $change;
+
+
+    public function updated($propertyName)
+    {
+        $this->validateInput();
+    }
+
+    public function validateInput()
+    {
+        $this->isCheckoutDisabled = empty($this->selectedCustomerId) || empty($this->payment_method) || empty($this->customers_pay);
+    }
 
     public function updatedSearch()
     {
@@ -128,7 +141,7 @@ class TransactionIndex extends Component
 
     public function store()
     {
-        Transaction::create([
+        $transaction = Transaction::create([
             'items' => $this->items,
             'customer_id' => $this->customer_id = $this->selectedCustomerId,
             'total' => $this->totalPrice,
@@ -144,7 +157,7 @@ class TransactionIndex extends Component
             'date' => date('Y-m-d')
         ]);
 
-        toastr()->success('Transaction saved successfully');
+        // toastr()->success('Transaction saved successfully');
 
         $this->items = [];
         $this->customer_id = null;
@@ -157,10 +170,15 @@ class TransactionIndex extends Component
 
         $this->calculateTotalPrice();
 
-        return redirect()->back();
+        return redirect()->route('transactions.invoice', $transaction->id);
+    }
+    public function generateInvoicePDF($transactionId)
+    {
+        $transaction = Transaction::findOrFail($transactionId);
 
-
-        // dd($this->items, $this->customer_id = $this->selectedCustomerId, $this->totalPrice, $this->description, $this->payment_method,  currencyIDRtoNumeric($this->customers_pay), currencyIDRtoNumeric($this->change));
+        $pdf = Pdf::loadView('invoices.invoice-pdf', ['transaction' => $transaction])
+            ->setPaper([0, 0, 400, 400], 'portrait');
+        return $pdf->stream('invoice-' . $transaction->invoice_number . '.pdf');
     }
     public function render()
     {

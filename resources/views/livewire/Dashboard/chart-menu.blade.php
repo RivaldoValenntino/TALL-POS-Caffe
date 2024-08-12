@@ -2,7 +2,7 @@
      <!-- Chart Menu -->
      <div class="p-4 bg-white rounded-lg shadow-lg">
          <h1 class="mb-2 text-xl font-bold">Most Popular Menu</h1>
-         <div style="width: 100%; height: 320px;">
+         <div style="width: 100%; height: 490px;">
              <canvas id="menuChart"></canvas>
          </div>
      </div>
