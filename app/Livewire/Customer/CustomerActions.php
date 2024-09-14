@@ -9,7 +9,6 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 class CustomerActions extends Component
 {
 
-    use WithFileUploads;
 
     public $customerId;
     public $name;
@@ -43,7 +42,7 @@ class CustomerActions extends Component
         $this->isEditing = false;
     }
 
-    public function edit(customer $customer)
+    public function edit(Customer $customer)
     {
         $this->customerId = $customer->id;
         $this->name = $customer->name;

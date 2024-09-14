@@ -21,6 +21,10 @@ class RoleMiddleware
             return $next($request);
         }
 
+        if (Auth::user()->role === 'kasir') {
+            return redirect('/dashboard/orders');
+        }
+
         return abort(401);
     }
 }

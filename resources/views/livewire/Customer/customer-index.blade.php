@@ -1,6 +1,6 @@
 <div>
     <!-- Table Section -->
-    <div class="max-w-[85rem] pl-32 mx-auto" x-data="{ load: $wire.entangle('loading') }">
+    <div class="max-w-[85rem] lg:pl-32 px-4 mx-auto" x-data="{ load: $wire.entangle('loading') }">
         <!-- Card -->
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
@@ -100,15 +100,21 @@
                                                 <i class="ph ph-trash-simple"></i>
                                                 <span>Delete</span>
                                             </button>
-                                            <button type="button" class="text-sm font-semibold text-blue-500"
+                                            <button type="button"
+                                                class="text-sm font-semibold text-center text-blue-500"
                                                 wire:click="edit({{ $customer->id }})">
-                                                <div class="animate-spin inline-block size-3 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
-                                                    role="status" aria-label="loading" x-show="load">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                                <i class="ph ph-pencil-simple-line" x-show="!load"></i>
+                                                <i class="ph ph-pencil-simple-line" wire:loading.remove
+                                                    wire:target="edit({{ $customer->id }})"></i>
+                                                <span wire:loading wire:target="edit({{ $customer->id }})">
+                                                    <div class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
+                                                        role="status" aria-label="loading">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                </span>
                                                 <span wire:loading.remove
                                                     wire:target="edit({{ $customer->id }})">Edit</span>
+                                                <span wire:loading
+                                                    wire:target="edit({{ $customer->id }})">Loading</span>
                                             </button>
                                         </td>
                                     </tr>

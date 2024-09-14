@@ -10,11 +10,15 @@ use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Title;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
+use Midtrans\Snap;
 
 class TransactionIndex extends Component
 {
     #[Title('Transaksi')]
-
+    #[Layout('layouts.cashier')]
+    public $snapToken;
     public $isCheckoutDisabled = true;
     public $items = [];
     public $customer_id;
@@ -25,10 +29,25 @@ class TransactionIndex extends Component
     public $selectedCustomerId;
     public $customers = [];
     public $payment_method = '';
+    public $invoice_number;
     public $customers_pay;
     public $change;
 
 
+
+    public function resetForm()
+    {
+        $this->items = [];
+        $this->customer_id = null;
+        $this->selectedCustomerId = null;
+        $this->totalPrice = 0;
+        $this->description = null;
+        $this->payment_method = '';
+        $this->customers_pay = null;
+        $this->change = null;
+        $this->searchMenu = '';
+        $this->search = '';
+    }
     public function updated($propertyName)
     {
         $this->validateInput();
@@ -36,7 +55,7 @@ class TransactionIndex extends Component
 
     public function validateInput()
     {
-        $this->isCheckoutDisabled = empty($this->selectedCustomerId) || empty($this->payment_method) || empty($this->customers_pay);
+        $this->isCheckoutDisabled = empty($this->selectedCustomerId) && empty($this->items);
     }
 
     public function updatedSearch()
@@ -149,7 +168,8 @@ class TransactionIndex extends Component
             'payment_method' => $this->payment_method,
             'customers_pay' => currencyIDRtoNumeric($this->customers_pay),
             'change' => currencyIDRtoNumeric($this->change),
-            'invoice_number' => 'INV' . now()->format('YmdHis')  . Str::random(6)
+            'invoice_number' => $this->invoice_number = 'INV' . now()->format('YmdHis')  . Str::random(6),
+            'user_id' => Auth::user()->id
         ]);
 
         Revenue::create([
@@ -157,20 +177,32 @@ class TransactionIndex extends Component
             'date' => date('Y-m-d')
         ]);
 
-        // toastr()->success('Transaction saved successfully');
+        $cust = Customer::find($this->selectedCustomerId);
 
-        $this->items = [];
-        $this->customer_id = null;
-        $this->selectedCustomerId = null;
-        $this->totalPrice = 0;
-        $this->description = null;
-        $this->payment_method = '';
-        $this->customers_pay = null;
-        $this->change = null;
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        \Midtrans\Config::$isProduction = config('midtrans.is_production');
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
 
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $this->invoice_number,
+                'gross_amount' => $this->totalPrice,
+                'date' => date('Y-m-d'),
+            ),
+            'customer_details' => array(
+                'first_name' => $cust->name
+            )
+        );
+
+        $snapToken = Snap::getSnapToken($params);
+        $this->snapToken = $snapToken;
+        $transaction->snap_token = $this->snapToken;
+        $transaction->status = 'success';
+        $transaction->save();
+        $this->resetForm();
         $this->calculateTotalPrice();
-
-        return redirect()->route('transactions.invoice', $transaction->id);
+        return redirect()->route('transactions.pay', $transaction->invoice_number);
     }
     public function generateInvoicePDF($transactionId)
     {
@@ -180,12 +212,17 @@ class TransactionIndex extends Component
             ->setPaper([0, 0, 400, 400], 'portrait');
         return $pdf->stream('invoice-' . $transaction->invoice_number . '.pdf');
     }
-    public function render()
+
+    protected $listeners = ['snapToken' => 'store'];
+    public function render(Transaction $transaction)
     {
         $menus = Menu::with('category')->search($this->searchMenu)->get()->groupBy(function ($menu) {
             return $menu->category->name;
         });
-        $transaksi = Transaction::all();
-        return view('livewire.transactions.transaction-index', compact('menus', 'transaksi'));
+        return view('livewire.transactions.transaction-index', [
+            'menus' => $menus,
+            'transaction' => $transaction,
+            'snapToken' => $this->snapToken,
+        ]);
     }
 }

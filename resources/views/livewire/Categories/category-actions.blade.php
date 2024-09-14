@@ -56,7 +56,8 @@
                                 </button>
                                 <button type="submit"
                                     class="px-3 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-                                    Save changes
+                                    <span wire:loading>Loading...</span>
+                                    <span wire:loading.remove>Save changes</span>
                                 </button>
                             </div>
                         </div>

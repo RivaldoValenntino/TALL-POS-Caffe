@@ -3,7 +3,7 @@
         <div x-data="{ open: $wire.entangle('show') }">
             <button type="button" class="add-btn" @click="open = true" wire:click="create">
                 <i class="text-xl ph ph-plus"></i>
-                New Customer
+                New User
             </button>
 
             <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-300"
@@ -26,11 +26,40 @@
                             <input type="hidden" wire:model="customerId">
                             <div class="grid gap-y-2">
                                 <div>
-                                    <label for="name" class="block mb-2 text-sm">Nama Customer</label>
+                                    <label for="name" class="block mb-2 text-sm">Nama</label>
                                     <input type="text" id="name" name="name"
                                         class="input-style @error('name') ring-rose-500 ring-1 @enderror"
                                         wire:model.defer="name">
                                     @error('name')
+                                        <small class="text-rose-500">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="username" class="block mb-2 text-sm">Username</label>
+                                    <input type="text" id="username" name="username"
+                                        class="input-style @error('name') ring-rose-500 ring-1 @enderror"
+                                        wire:model.defer="username">
+                                    @error('username')
+                                        <small class="text-rose-500">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="role" class="block mb-2 text-sm">Role</label>
+                                    <select class="input-style" wire:model.defer='role'>
+                                        <option selected disabled value="">Pilih Role</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="kasir">Kasir</option>
+                                    </select>
+                                    @error('role')
+                                        <small class="text-rose-500">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="password" class="block mb-2 text-sm">Password</label>
+                                    <input type="text" id="password" name="password"
+                                        class="input-style @error('name') ring-rose-500 ring-1 @enderror"
+                                        wire:model.defer="password">
+                                    @error('password')
                                         <small class="text-rose-500">{{ $message }}</small>
                                     @enderror
                                 </div>

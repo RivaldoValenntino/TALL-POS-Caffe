@@ -23,10 +23,11 @@ class AuthController extends Controller
             'password.required' => 'Password is required',
         ]);
         if (Auth::attempt($credentials, $remember = true)) {
+            session(['first_login' => true]);
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
         } else {
-            toastr()->error('Username or password is incorrect');
+            toastr()->error('Wrong username or password');
             return redirect()->back();
         }
     }

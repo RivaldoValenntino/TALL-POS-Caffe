@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <link rel="stylesheet" href="{{ asset('css/cashier.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
@@ -34,8 +35,8 @@
     </div>
     <div>
         <livewire:sidebar />
-        <div class="w-full py-4 lg:py-12 dark:bg-neutral-800 bg-slate-100 h-svh">
-            <div class="lg:space-y-4 lg:pt-8 sm:space-y-6">
+        <div class="w-full dark:bg-neutral-800 bg-slate-100">
+            <div class="px-6 py-12">
                 {{ $slot }}
             </div>
         </div>

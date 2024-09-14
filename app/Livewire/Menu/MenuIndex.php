@@ -35,6 +35,7 @@ class MenuIndex extends Component
     {
         $menus = Menu::with('category')
             ->search($this->search)
+            ->latest()
             ->paginate(6)
             ->withQueryString();
         return view('livewire.menu.menu-index', compact('menus'));

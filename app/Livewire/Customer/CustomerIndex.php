@@ -16,6 +16,7 @@ class CustomerIndex extends Component
     protected $listeners = ['customerUpdated' => 'render', 'customerDeleted' => 'render'];
 
     public $loading = false;
+
     public function edit($customerId)
     {
         $this->dispatch('editCustomer', $customerId);
@@ -28,7 +29,11 @@ class CustomerIndex extends Component
 
     public function render()
     {
-        $customers = Customer::search($this->search)->paginate(10)->withQueryString();
+        $customers = Customer::search($this->search)
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return view('livewire.customer.customer-index', compact('customers'));
     }
 }

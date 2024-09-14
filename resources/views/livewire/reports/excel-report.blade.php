@@ -1,26 +1,6 @@
 <div>
     <div class="container">
-        <section class="flex flex-col flex-wrap p-5 mx-auto bg-white rounded-lg shadow-lg lg:max-w-2xl">
-            <h1 class="py-2 font-bold">Report Transactions </h1>
-            <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
-            <p class="py-2">Report transactions per month </p>
-            <div class="flex justify-between mt-4">
-                <div class="flex items-center gap-4">
-                    <input id="date-picker" wire:model="startDate"
-                        class="rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200  disabled:border-0 disabled:bg-blue-gray-50"
-                        placeholder="Select Start Date" />
-                    <span class="text-gray-500">To</span>
-                    <input id="date-picker" wire:model="endDate"
-                        class="rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200  disabled:border-0 disabled:bg-blue-gray-50"
-                        placeholder="Select End Date" />
-                </div>
-                <div class="flex gap-4">
-                    <button wire:click="export"
-                        class="px-3 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"><i
-                            class="mr-2 ph ph-download"></i> Download</button>
-                </div>
-            </div>
-        </section>
+
         <section class="flex flex-col max-w-2xl p-5 mx-auto mt-4 bg-white rounded-lg shadow-lg">
             <h1 class="py-2 font-bold">Report Revenue</h1>
             <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">

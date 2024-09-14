@@ -104,7 +104,7 @@
             <p>Customer: {{ $transaction->customer->name }}</p>
         </div>
         <hr>
-        <table class="items-table">
+        <table class="items-table" width="100%" style="table-layout:fixed;">
             <thead>
                 <tr>
                     <th>Item</th>

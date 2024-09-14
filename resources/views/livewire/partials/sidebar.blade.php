@@ -1,7 +1,10 @@
 <div>
-    <div x-data="{ isHide: true }" class="print:hidden">
+    <div x-data="{ isOpen: false, isOpen2: false, isHide: true, isHide2: true }" class="print:hidden">
         <header class="fixed top-0 w-full header-cls">
             <nav class="flex items-center w-full px-2 basis-full" aria-label="Global">
+                @can('kasir')
+                    <h1 class="text-white text-nowrap">Selamat Datang {{ auth()->user()->name }}</h1>
+                @endcan
                 <div
                     class="flex items-center {{ Auth::user()->role === 'admin' ? 'justify-between' : 'justify-end' }} w-full sm:gap-x-3 sm:order-3">
                     @can('admin')
@@ -32,13 +35,13 @@
                                         {{ auth()->user()->name }}
                                     </p>
                                 </div>
-                                <div class="py-2 mt-2 first:pt-0 last:pb-0">
-                                    <form class="link-dropdown" action="{{ route('logout') }}" method="POST">
+                                <form class="w-full link-dropdown" action="{{ route('logout') }}" method="POST">
+                                    <div class="py-2 mt-2">
                                         @csrf
                                         <i class="text-xl ph ph-sign-out"></i>
                                         <button type="submit">Sign out</button>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -76,8 +79,14 @@
                         <ul class="space-y-1.5 text-center pl-2">
                             <div class="px-2">
                                 <li><a class="link-cls" href="{{ route('dashboard.dashboard') }}">
-                                        <i class="text-xl ph ph-house"></i>
+                                        <i class="text-xl ph ph-squares-four"></i>
                                         <span class="text-sm" :class="{ 'hidden': isHide }">Dashboard</span>
+                                    </a></li>
+                            </div>
+                            <div class="px-2">
+                                <li><a class="link-cls" href="{{ route('dashboard.users') }}">
+                                        <i class="text-xl ph ph-users"></i>
+                                        <span class="text-sm" :class="{ 'hidden': isHide }">User</span>
                                     </a></li>
                             </div>
                             @can('kasir')
@@ -88,36 +97,57 @@
                                         </a></li>
                                 </div>
                             @endcan
-                            <div class="px-2">
-                                <li><a class="link-cls" href="{{ route('dashboard.menu') }}">
-                                        <i class="text-xl ph ph-squares-four"></i>
-                                        <span class="text-sm" :class="{ 'hidden': isHide }">Menu</span>
-                                    </a></li>
+                            <div class="px-2" x-cloak>
+                                <div @click="isOpen = !isOpen" class="text-white cursor-pointer link-cls">
+                                    <i class="text-xl ph ph-database"></i>
+                                    <span class="text-sm whitespace-nowrap" :class="{ 'hidden': isHide }">Master
+                                        Data</span>
+                                    <i class="ml-auto transition-transform duration-300 ph ph-caret-down"
+                                        :class="{
+                                            'rotate-180': isOpen,
+                                            'rotate-0': !isOpen,
+                                            'hidden': isHide
+                                        }"></i>
+                                </div>
                             </div>
-                            <div class="px-2">
-                                <li><a class="link-cls" href="{{ route('dashboard.categories') }}">
-                                        <i class="text-xl ph ph-stack"></i>
-                                        <span class="text-sm" :class="{ 'hidden': isHide }">Category</span>
-                                    </a></li>
+                            <ul x-show="isOpen" :class="{ 'hidden': isHide }" class="pl-8 mt-2 space-y-1 text-white"
+                                x-transition.duration.300ms>
+                                <li class="px-2 rounded-md">
+                                    <a href="{{ route('dashboard.categories') }}" class="text-sm link-cls">
+                                        <span class="ml-2">Category</span>
+                                    </a>
+                                </li>
+                                <li class="px-2 rounded-md">
+                                    <a href="{{ route('dashboard.menu') }}" class="text-sm link-cls">
+                                        <span class="ml-2">Menu</span>
+                                    </a>
+                                </li>
+                                <li class="px-2 rounded-md">
+                                    <a href="{{ route('dashboard.customers') }}" class="text-sm link-cls">
+                                        <span class="ml-2">Customers</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="px-2" x-cloak>
+                                <div @click="isOpen2 = !isOpen2" class="text-white cursor-pointer link-cls">
+                                    <i class="text-xl ph ph-book"></i>
+                                    <span class="text-sm whitespace-nowrap" :class="{ 'hidden': isHide }">Reports</span>
+                                    <i class="ml-auto transition-transform duration-300 ph ph-caret-down"
+                                        :class="{
+                                            'rotate-180': isOpen2,
+                                            'rotate-0': !isOpen2,
+                                            'hidden': isHide
+                                        }"></i>
+                                </div>
                             </div>
-                            <div class="px-2">
-                                <li><a class="link-cls" href="{{ route('dashboard.customers') }}">
-                                        <i class="text-xl ph ph-users-three"></i>
-                                        <span class="text-sm" :class="{ 'hidden': isHide }">Customers</span>
-                                    </a></li>
-                            </div>
-                            <div class="px-2">
-                                <li><a class="link-cls whitespace-nowrap" href="{{ route('dashboard.orders.history') }}">
-                                        <i class="text-xl ph ph-clock-counter-clockwise"></i>
-                                        <span class="text-sm" :class="{ 'hidden': isHide }">Orders History</span>
-                                    </a></li>
-                            </div>
-                            <div class="px-2">
-                                <li><a class="link-cls whitespace-nowrap" href="{{ route('dashboard.report') }}">
-                                        <i class="text-xl ph ph-file-xls"></i>
-                                        <span class="text-sm" :class="{ 'hidden': isHide }">Report</span>
-                                    </a></li>
-                            </div>
+                            <ul x-show="isOpen2" :class="{ 'hidden': isHide }" class="pl-8 mt-2 space-y-1 text-white"
+                                x-transition.duration.300ms>
+                                <li class="px-2 rounded-md">
+                                    <a href="{{ route('dashboard.orders.history') }}" class="text-sm link-cls">
+                                        <span class="ml-2">Transactions</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </ul>
                     </aside>
                 </div>

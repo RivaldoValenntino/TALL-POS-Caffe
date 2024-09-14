@@ -1,6 +1,87 @@
 <div>
-    <div>
+    <div x-data="{ isOpen: false, startDate: @entangle('startDate'), endDate: @entangle('endDate') }" class="relative">
+
+        {{-- Modal Transaction report --}}
+        <div x-cloak x-show="isOpen" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 z-[999] flex items-center justify-center overflow-y-auto bg-[rgba(0,0,0,0.75)] backdrop-blur-sm">
+            <div
+                class="flex flex-col flex-wrap p-5 mx-auto bg-white rounded-lg shadow-lg lg:max-w-2xl backdrop-blur-sm">
+                <div class="flex justify-between">
+                    <h1 class="py-2 font-bold">Report Transactions </h1>
+                    <button @click="isOpen = false"><i class="ph ph-x"></i></button>
+                </div>
+                <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
+                <p class="py-2">Please select date first</p>
+                <div class="flex justify-between mt-4">
+                    <div class="flex items-center gap-4">
+                        <input id="date-picker" wire:model="startDate" autocomplete="off"
+                            class="rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200  disabled:border-0 disabled:bg-blue-gray-50"
+                            placeholder="Select Start Date" />
+                        <span class="text-gray-500">To</span>
+                        <input id="date-picker" wire:model="endDate" autocomplete="off"
+                            class="rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200  disabled:border-0 disabled:bg-blue-gray-50"
+                            placeholder="Select End Date" />
+                    </div>
+                    <div class="flex gap-4 ml-4">
+                        <button wire:click="export"
+                            class="px-3 py-2 mr-4 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 {{ $startDate && $endDate ? 'cursor-pointer' : 'cursor-not-allowed' }}"><i
+                                class="mr-2 ph ph-download"></i> Download</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- End Modal --}}
         <!-- Table Section -->
+        <div class="grid max-w-[85rem] px-8 gap-6 mx-auto lg:grid-cols-4 md:grid-cols-2 lg:mb-4 mb-24">
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
+                <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-green-200 rounded-lg shadow-lg">
+                    <i class="text-3xl text-green-700 ph ph-cash-register"></i>
+                </div>
+                <div class="flex flex-col flex-grow ml-4">
+                    <span class="text-xl font-bold">{{ $totalTransactionsToday }}</span>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500">Transaction Today</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
+                <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-green-200 rounded-lg shadow-lg">
+                    <i class="text-3xl text-green-700 ph ph-cash-register"></i>
+                </div>
+                <div class="flex flex-col flex-grow ml-4">
+                    <span class="text-xl font-bold">{{ $totalTransactionThisMonth }}</span>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500">Transaction This Month</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
+                <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-green-200 rounded-lg shadow-lg">
+                    <i class="text-3xl text-green-700 ph ph-money"></i>
+                </div>
+                <div class="flex flex-col flex-grow ml-4">
+                    <span class="text-xl font-bold">@currency($totalRevenueToday)</span>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500">Revenue Today</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-lg">
+                <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-green-200 rounded-lg shadow-lg">
+                    <i class="text-3xl text-green-700 ph ph-money"></i>
+                </div>
+                <div class="flex flex-col flex-grow ml-4">
+                    <span class="text-xl font-bold">@currency($totalRevenueThisMonth)</span>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500">Revenue this month</span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto" x-data="{ load: $wire.entangle('loading') }">
             <!-- Card -->
             <div class="flex flex-col">
@@ -29,7 +110,8 @@
                                                             height="24" viewBox="0 0 24 24" fill="none"
                                                             stroke="currentColor" stroke-width="2"
                                                             stroke-linecap="round" stroke-linejoin="round">
-                                                            <circle cx="11" cy="11" r="8"></circle>
+                                                            <circle cx="11" cy="11" r=" 8">
+                                                            </circle>
                                                             <path d="m21 21-4.3-4.3"></path>
                                                         </svg>
                                                     </div>
@@ -40,7 +122,23 @@
                                             <!-- End SearchBox -->
                                         </div>
 
-                                        @livewire('customer.customer-actions')
+
+                                        <div class="relative">
+                                            <div class="relative">
+                                                <div
+                                                    class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
+                                                    <i
+                                                        class="text-gray-400 ph ph-calendar shrink-0 size-4 dark:text-white/60"></i>
+                                                </div>
+                                                <input class="search-btn" type="text" wire:model.live='filterDate'
+                                                    id="date-picker" placeholder="Filter by date">
+                                            </div>
+                                        </div>
+                                        <button @click = "isOpen = !isOpen"
+                                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-lg gap-x-2 hover:bg-green-700 focus:outline-none focus:bg-green-700 disabled:opacity-50 disabled:pointer-events-none">
+                                            <i class="text-xl ph ph-file-xls"></i>
+                                            <span>Export Transactions</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -74,6 +172,12 @@
                                             <span
                                                 class="text-xs font-semibold tracking-wide text-gray-800 uppercase dark:text-neutral-200">
                                                 Payment Method
+                                            </span>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-start whitespace-nowrap">
+                                            <span
+                                                class="text-xs font-semibold tracking-wide text-gray-800 uppercase dark:text-neutral-200">
+                                                Cashier Name
                                             </span>
                                         </th>
                                         {{-- <th scope="col" class="px-6 py-3 text-start whitespace-nowrap">
@@ -158,7 +262,11 @@
                                             </td>
                                             <td class="px-6 py-3 whitespace-nowrap">
                                                 <span
-                                                    class="text-sm text-gray-800 dark:text-white">{{ $transaction->created_at->diffForHumans() }}</span>
+                                                    class="text-sm text-gray-800 dark:text-white">{{ $transaction->user->name }}</span>
+                                            </td>
+                                            <td class="px-6 py-3 whitespace-nowrap">
+                                                <span
+                                                    class="text-sm text-gray-800 dark:text-white">{{ $transaction->created_at->format('d M Y') }}</span>
                                             </td>
                                             <td class="px-6 py-3 whitespace-nowrap">
                                                 <button type="button" class="mr-2 text-sm font-semibold text-red-600"
@@ -166,7 +274,8 @@
                                                     <i class="ph ph-trash-simple"></i>
                                                     <span>Delete</span>
                                                 </button>
-                                                <button type="button" class="mr-2 text-sm font-semibold text-blue-500">
+                                                <button type="button"
+                                                    class="mr-2 text-sm font-semibold text-blue-500">
                                                     <a
                                                         href="{{ route('dashboard.orders.detail', $transaction->invoice_number) }}">
                                                         <i class="ph ph-eye"></i>
@@ -200,5 +309,30 @@
         </div>
         <!-- End Table Section -->
     </div>
+    @push('scripts')
+        <script>
+            const datepicker = flatpickr("#date-picker", {});
 
+            const calendarContainer = datepicker.calendarContainer;
+            const calendarMonthNav = datepicker.monthNav;
+            const calendarNextMonthNav = datepicker.nextMonthNav;
+            const calendarPrevMonthNav = datepicker.prevMonthNav;
+            const calendarDaysContainer = datepicker.daysContainer;
+
+            calendarContainer.className =
+                `${calendarContainer.className} bg-white p-4 border border-blue-gray-50 rounded-lg shadow-lg shadow-blue-gray-500/10 font-sans text-sm font-normal text-blue-gray-500 focus:outline-none break-words whitespace-normal`;
+
+            calendarMonthNav.className =
+                `${calendarMonthNav.className} flex items-center justify-between mb-4 [&>div.flatpickr-month]:-translate-y-3`;
+
+            calendarNextMonthNav.className =
+                `${calendarNextMonthNav.className} absolute !top-2.5 !right-1.5 h-6 w-6 bg-transparent hover:bg-blue-gray-50 !p-1 rounded-md transition-colors duration-300`;
+
+            calendarPrevMonthNav.className =
+                `${calendarPrevMonthNav.className} absolute !top-2.5 !left-1.5 h-6 w-6 bg-transparent hover:bg-blue-gray-50 !p-1 rounded-md transition-colors duration-300`;
+
+            calendarDaysContainer.className =
+                `${calendarDaysContainer.className} [&_span.flatpickr-day]:!rounded-md [&_span.flatpickr-day.selected]:!bg-gray-900 [&_span.flatpickr-day.selected]:!border-gray-900`;
+        </script>
+    @endpush
 </div>

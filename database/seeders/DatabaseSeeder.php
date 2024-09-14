@@ -8,7 +8,6 @@ use App\Models\Menu;
 use App\Models\User;
 use Database\Factories\CustomerFactory;
 use Database\Factories\RevenueFactory;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,10 +20,16 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'name' => 'Kasir',
-            'email' => 'p7I8Z@example.com',
             'password' => Hash::make('kasir123'),
             'role' => 'kasir',
-            'username' => 'kasir',
+            'username' => 'kasir2',
+        ]);
+
+        User::create([
+            'name' => 'admin',
+            'password' => Hash::make('admin123'),
+            'role' => 'admin',
+            'username' => 'admin2'
         ]);
     }
 }

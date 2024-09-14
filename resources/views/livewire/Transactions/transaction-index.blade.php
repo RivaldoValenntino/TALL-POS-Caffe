@@ -1,24 +1,25 @@
 <div>
-    <div class="container">
-        <div class="px-8 mx-auto">
-            <div class="grid grid-cols-12 gap-4">
-                <div class="bg-white rounded-md shadow-md h-[650px] overflow-auto lg:col-span-8 md:col-span-2">
-                    <div class="px-4 mt-6">
-                        <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none  ps-3.5">
-                                <i class="text-gray-400 ph ph-magnifying-glass"></i>
-                            </div>
-                            <input class="search-btn" type="text" placeholder="Find a menu.."
-                                wire:model.live.debounce.300ms="searchMenu">
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 px-4 py-2 sm:grid-cols-3 md:grid-cols-4">
+    <div class="mb-8">
+        <div class="px-4">
+            <div class="relative w-1/2 my-4">
+                <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3.5">
+                    <i class="text-gray-400 ph ph-magnifying-glass"></i>
+                </div>
+                <input class="search-btn" type="text" placeholder="Find a menu.."
+                    wire:model.live.debounce.300ms="searchMenu">
+            </div>
+            <div class="grid grid-cols-12 gap-4 mb-8">
+                <div
+                    class="items bg-white mb-12 border-t-4 border-sky-500 rounded-md shadow-md h-[768px] overflow-auto lg:col-span-7 md:col-span-12">
+                    <div class="px-2">
+                        <div class="grid grid-cols-2 gap-4 py-2 sm:grid-cols-3 md:grid-cols-4">
                             @forelse ($menus as $categoryName => $menuItems)
-                                <div class="col-span-full">
-                                    <h1 class="text-xl font-bold">{{ $categoryName }}</h1>
+                                <div class="px-4 mt-2 col-span-full">
+                                    <h1 class="text-xl">{{ $categoryName }}</h1>
                                 </div>
                                 @forelse ($menuItems as $menu)
                                     <div wire:click="addItem({{ $menu->id }})"
-                                        class="col-span-1 px-2 py-1 transition-all duration-300 ease-in-out rounded-md cursor-pointer hover:scale-90">
+                                        class="col-span-1 px-2 py-1 transition-all duration-300 ease-in-out rounded-md cursor-pointer hover:scale-95">
                                         <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
                                             class="rounded-md aspect-[1/1]">
                                         <div class="mt-2">
@@ -39,9 +40,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-white rounded-md shadow-md 1 lg:col-span-4 h-[650px] overflow-auto">
+                <div
+                    class="transaction bg-white border-t-4 border-sky-500 rounded-md shadow-md md:col-span-12 lg:col-span-5 h-[612px] overflow-auto">
                     <div class="flex items-center justify-between p-4" x-cloak>
-                        <h1 class="text-xl font-bold">Transaction</h1>
+                        <h1 class="text-xl">Transaction</h1>
                         @livewire('customer.customer-actions')
                     </div>
                     <hr class="mb-4">
@@ -131,13 +133,11 @@
                                                             class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap dark:text-neutral-200">
                                                             @currency($item['amount'])</td>
                                                         <td>
-                                                            <div class="flex gap-4">
-                                                                <button
-                                                                    class="w-8 h-8 bg-gray-200 rounded-full hover:scale-90"
+                                                            <div class="flex gap-4 m-2">
+                                                                <button class="w-8 h-8 bg-gray-200 rounded-full hover:"
                                                                     wire:click="incrementQty('{{ $key }}')"><i
                                                                         class="font-bold ph ph-plus"></i></button>
-                                                                <button
-                                                                    class="w-8 h-8 bg-gray-200 rounded-full hover:scale-90"
+                                                                <button class="w-8 h-8 bg-gray-200 rounded-full hover:"
                                                                     wire:click="removeItem('{{ $key }}')"><i
                                                                         class="ph ph-minus"></i></button>
                                                             </div>
@@ -163,12 +163,10 @@
                                                 Qris
                                             </button>
                                         </div>
-                                        <img src="{{ asset('image/qr-contoh.png') }}" alt="" class="mt-4"
-                                            x-show="$wire.payment_method === 'qris'" x-cloak width="200">
                                         <textarea name="description" wire:model.defer="description"
-                                            class="w-full px-4 py-3 mt-4 border-2 border-gray-200 rounded-lg" cols="10" rows="5"
-                                            placeholder="Notes"></textarea>
-                                        <div class="inline-flex items-center justify-center w-full gap-2">
+                                            class="w-full px-4 py-3 mt-4 border-2 border-gray-200 rounded-lg" cols="10" rows="5" placeholder="Notes"></textarea>
+                                        <div class="inline-flex items-center justify-center w-full gap-2"
+                                            x-show="$wire.payment_method === 'cash'">
                                             <input type="text" wire:model="customers_pay"
                                                 class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg"
                                                 type-currency='IDR' id="rupiah" placeholder="Customer's Pay"
@@ -194,17 +192,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <a wire:click.prevent="store" target="_blank"
-                                class="w-full px-3 py-2 text-center transition duration-300 ease-in-out rounded-lg"
+                            <button wire:click="store"
+                                class="w-full px-3 py-2 mt-4 text-center transition duration-300 ease-in-out rounded-lg"
                                 :class="{
                                     'bg-blue-500 text-white hover:bg-blue-600 cursor-pointer': !$wire
                                         .isCheckoutDisabled,
                                     'bg-blue-300 text-gray-200 cursor-not-allowed': $wire.isCheckoutDisabled
                                 }"
                                 :disabled="$wire.isCheckoutDisabled">
-                                <i class="text-lg ph ph-printer"></i>
-                                <span>Checkout</span>
-                            </a>
+                                <i class="text-lg ph ph-printer" wire:loading.remove></i>
+                                <span wire:loading.remove>Checkout</span>
+                                <span wire:loading>Loading...</span>
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@
             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
             x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0" class="fixed-overlay backdrop-blur-sm">
-            <div x-on:click.away="open = false $wire.closeModal()"
+            <div x-on:click.away="open = false; $wire.closeModal()"
                 class="w-full max-w-lg mx-3 bg-white border shadow-sm modal-content rounded-xl">
                 <div class="flex items-center justify-between px-4 py-3 border-b">
                     <h3 class="font-bold text-gray-800">{{ $this->ModalTitle }}</h3>
@@ -92,7 +92,8 @@
                                 </button>
                                 <button type="submit"
                                     class="px-3 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-                                    Save changes
+                                    <span wire:loading>Loading...</span>
+                                    <span wire:loading.remove>Save changes</span>
                                 </button>
                             </div>
                         </div>
